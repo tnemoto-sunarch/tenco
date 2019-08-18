@@ -1,7 +1,14 @@
 import colors from 'vuetify/es5/util/colors'
+const environment = process.env.NODE_ENV || 'development'
+const envSet = require(`./env/env.${environment}.js`)
 
 export default {
   mode: 'universal',
+  server: envSet.server,
+  env: envSet,
+  router: {
+    base: '/tenco/web/'
+  },
   /*
    ** Headers of the page
    */
@@ -17,7 +24,7 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }]
   },
   /*
    ** Customize the progress-bar color
@@ -30,7 +37,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/common.js', '~/plugins/tencoReqApi.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -45,7 +52,9 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    ['cookie-universal-nuxt', { parseJSON: false }],
+    'nuxt-material-design-icons'
   ],
   /*
    ** Axios module configuration
@@ -80,6 +89,9 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      config.performance = config.performance || {}
+      config.performance.hints = false
+    }
   }
 }

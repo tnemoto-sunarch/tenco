@@ -7,50 +7,28 @@
         </v-card-title>
         <v-card-text>
           <p>
-            社員慰安旅行を円滑に進めるためのチェックリストプロジェクトです。
+            チェックリストプロジェクトです。
           </p>
           <p>
-            ソースはこちら
-            <a href="https://vuetifyjs.com" target="_blank"> documentation </a>.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a href="https://chat.vuetifyjs.com/" target="_blank" title="chat">
-              discord </a
+            ソースはこちら。
+            <a href="https://github.com/tnemoto-sunarch/tenco" target="_blank">
+              GitHub </a
             >.
           </p>
           <p>
-            Find a bug? Report it on the github
+            バグ報告はこちらからお願いします。
             <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
+              href="https://github.com/tnemoto-sunarch/tenco/issues"
               target="_blank"
-              title="contribute"
             >
               issue board </a
             >.
           </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
           <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
+            <em><small>&mdash; Tsubasa Nemoto</small></em>
           </div>
           <hr class="my-3" />
-          <a href="https://nuxtjs.org/" target="_blank">
-            Nuxt Documentation
-          </a>
-          <br />
-          <a href="https://github.com/nuxt/nuxt.js" target="_blank">
-            Nuxt GitHub
-          </a>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
-          </v-btn>
-        </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>
