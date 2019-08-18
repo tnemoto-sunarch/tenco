@@ -3,12 +3,10 @@
     <v-flex xs12 sm8 md6>
       <v-card>
         <v-card-title class="headline">
-          テンコちゃん ver.2019
+          {{ title }}
         </v-card-title>
         <v-card-text>
-          <p>
-            チェックリストプロジェクトです。
-          </p>
+          <p>{{ description }}</p>
           <p>
             ソースはこちら。
             <a href="https://github.com/tnemoto-sunarch/tenco" target="_blank">
@@ -33,3 +31,14 @@
     </v-flex>
   </v-layout>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      title: this.$getAppConf().title,
+      description: this.$getAppConf().description
+    }
+  }
+}
+</script>

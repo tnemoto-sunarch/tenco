@@ -4,6 +4,10 @@
       <v-toolbar>
         <v-toolbar-title class="small">{{ title }}</v-toolbar-title>
         <v-spacer></v-spacer>
+      </v-toolbar>
+      <v-toolbar>
+        <span>チェック済：{{ cur_count }} / {{ tot_count }}</span>
+        <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn
             value="check"
@@ -14,7 +18,6 @@
           >
             <v-icon>play_arrow</v-icon>
           </v-btn>
-
           <v-btn
             value="refresh"
             class="grey darken-2"
@@ -24,7 +27,6 @@
           >
             <v-icon>refresh</v-icon>
           </v-btn>
-
           <v-btn
             value="close"
             class="grey darken-2"
@@ -44,6 +46,7 @@
           router
           exact
           class="border"
+          :class="{ checked: item.status }"
         >
           <v-list-item-content>
             <v-list-item-title v-text="item.name" />
@@ -87,7 +90,9 @@ export default {
     return {
       title: '',
       status: '',
-      items: []
+      items: [],
+      cur_count: 0,
+      tot_count: 0
     }
   },
   created() {
@@ -128,7 +133,10 @@ export default {
         this.title = data.check_list_detail.title
         this.status = data.check_list_detail.status
         this.items = data.check_list_detail.result_list
-
+        if (data.check_list_detail.result_list) {
+          this.cur_count = data.check_list_detail.cur_count
+          this.tot_count = data.check_list_detail.tot_count
+        }
         this.$store.dispatch('checkList/getList')
       } catch (e) {}
     },
@@ -175,6 +183,9 @@ export default {
   border-bottom: 2px solid darkgray;
 }
 .small {
-  font-size: 12px;
+  font-size: 14px;
+}
+.checked {
+  background-color: #333333;
 }
 </style>

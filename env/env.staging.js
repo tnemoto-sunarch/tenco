@@ -3,5 +3,10 @@ module.exports = {
     port: 3002,
     host: '0.0.0.0'
   },
-  apiBaseUrl: 'http://localhost:8081/tenco/api/v1/'
+  app: {
+    title: 'テンコちゃん ver.2019',
+    description: 'チェックリストプロジェクトです。',
+    copyright: 'SA',
+    apiBaseUrl: 'http://localhost:8080/tenco/api/v1/'
+  }
 }

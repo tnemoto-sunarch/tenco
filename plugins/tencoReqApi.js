@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = process.env.apiBaseUrl
+const BASE_URL = process.env.app.apiBaseUrl
 
 export default ({ app }, inject) => {
   inject('tecoReqApi', (uri, reqData, callback) => {

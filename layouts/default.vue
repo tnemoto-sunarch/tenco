@@ -29,6 +29,7 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-img alt="Tenco Logo" src="./logo.png" max-width="40" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
     </v-app-bar>
@@ -38,7 +39,7 @@
       </v-container>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2019 SunArch Corporation</span>
+      <span>&copy; 2019 {{ copyright }}</span>
     </v-footer>
   </v-app>
 </template>
@@ -55,7 +56,8 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'テンコちゃん ver.2019'
+      title: this.$getAppConf().title,
+      copyright: this.$getAppConf().copyright
     }
   },
   computed: {
