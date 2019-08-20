@@ -23,6 +23,7 @@
     "cookie-universal-nuxt": "^2.0.17",
     "cross-env": "^5.2.0",
     "nuxt": "^2.0.0",
+    "nuxt-basic-auth-module": "^1.2.0",
     "nuxt-material-design-icons": "^1.0.4"
   },
   "devDependencies": {

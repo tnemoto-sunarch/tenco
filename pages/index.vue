@@ -23,7 +23,7 @@
             >.
           </p>
           <div class="text-xs-right">
-            <em><small>&mdash; Tsubasa Nemoto</small></em>
+            <em><small>&mdash; tnemoto</small></em>
           </div>
           <hr class="my-3" />
         </v-card-text>

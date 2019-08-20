@@ -54,7 +54,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     ['cookie-universal-nuxt', { parseJSON: false }],
-    'nuxt-material-design-icons'
+    'nuxt-material-design-icons',
+    'nuxt-basic-auth-module'
   ],
   /*
    ** Axios module configuration
@@ -93,5 +94,6 @@ export default {
       config.performance = config.performance || {}
       config.performance.hints = false
     }
-  }
+  },
+  basic: envSet.basic
 }

@@ -8,5 +8,10 @@ module.exports = {
     description: 'チェックリストプロジェクトです。',
     copyright: 'SA',
     apiBaseUrl: 'http://localhost:8080/tenco/api/v1/'
+  },
+  basic: {
+    name: 'admin',
+    pass: 'pass',
+    enabled: false
   }
 }

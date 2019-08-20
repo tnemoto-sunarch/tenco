@@ -6,7 +6,7 @@
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-toolbar>
-        <span>チェック済：{{ cur_count }} / {{ tot_count }}</span>
+        <span v-if="type !== '30'">済：{{ cur_count }} / {{ tot_count }}</span>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn
@@ -36,9 +36,44 @@
           >
             <v-icon>done</v-icon>
           </v-btn>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on }">
+              <v-btn color="primary" dark small v-on="on">
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </template>
+            <v-list dense>
+              <v-list-item @click="infoCheckList">
+                <v-icon>info</v-icon>
+                <v-list-item-title>info</v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                :disabled="!(status == '00' || status == '10') || type == '30'"
+                @click="changeCheck"
+              >
+                <v-icon>assignment_late</v-icon>
+                <v-list-item-title>change type</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-toolbar-items>
       </v-toolbar>
-      <v-list v-if="items.length" class="grey darken-1">
+      <v-list v-if="type === '20' || type === '30'" class="grey darken-1">
+        <v-list-item>
+          <v-list-item-content>
+            <p v-if="status === '00'">
+              チェックを開始してください。
+            </p>
+            <p v-else-if="status === '10'">
+              チェック中です。
+            </p>
+            <p v-else-if="status === '20'">
+              チェックは完了しています。
+            </p>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list v-else-if="type === '10' && items.length" class="grey darken-1">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -68,31 +103,37 @@
       <v-list v-else class="grey darken-1">
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title
-              >まだこのリストは開始していません。</v-list-item-title
-            >
+            <p>
+              チェックを開始してください。
+            </p>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-flex>
     <confirm ref="confirm"></confirm>
+    <infoDialog ref="infoDialog"></infoDialog>
   </v-layout>
 </template>
 
 <script>
 import confirm from '@/components/Confirm.vue'
+import infoDialog from '@/components/InfoDialog.vue'
 
 export default {
   components: {
-    confirm
+    confirm,
+    infoDialog
   },
   data() {
     return {
       title: '',
       status: '',
+      type: '',
       items: [],
       cur_count: 0,
-      tot_count: 0
+      tot_count: 0,
+      open_time: '',
+      close_time: ''
     }
   },
   created() {
@@ -132,11 +173,14 @@ export default {
       try {
         this.title = data.check_list_detail.title
         this.status = data.check_list_detail.status
+        this.type = data.check_list_detail.type
         this.items = data.check_list_detail.result_list
         if (data.check_list_detail.result_list) {
           this.cur_count = data.check_list_detail.cur_count
           this.tot_count = data.check_list_detail.tot_count
         }
+        this.open_time = data.check_list_detail.open_time
+        this.close_time = data.check_list_detail.close_time
         this.$store.dispatch('checkList/getList')
       } catch (e) {}
     },
@@ -173,6 +217,35 @@ export default {
           this.loadData
         )
       }
+    },
+    async changeCheck() {
+      const userId = this.$store.state.user.uid
+      const ccId = this.$route.params.page
+      if (
+        await this.$refs.confirm.open(
+          'チェックリストの変更',
+          'チェックリストのタイプ変更を行います。よろしいですか？',
+          { color: 'error' }
+        )
+      ) {
+        this.$tecoReqApi(
+          'checklist/' + ccId + '/chtype',
+          {
+            user_id: userId
+          },
+          this.loadData
+        )
+      }
+    },
+    async infoCheckList() {
+      const data = [
+        { key: 'チェックリスト名', value: this.title },
+        { key: 'ステータス', value: this.status },
+        { key: 'タイプ', value: this.type },
+        { key: '開始日時', value: this.open_time },
+        { key: '完了日時', value: this.close_time }
+      ]
+      await this.$refs.infoDialog.open(data)
     }
   }
 }

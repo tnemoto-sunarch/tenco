@@ -7,7 +7,14 @@
       fixed
       app
     >
-      <v-list>
+      <v-list dense>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-subtitle v-text="ptime" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list dense>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -22,10 +29,8 @@
             <v-list-item-title v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
+        <div style="height: 100px"></div>
       </v-list>
-      <v-footer :fixed="fixed" app>
-        <span class="small">更新：{{ ptime }}</span>
-      </v-footer>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
