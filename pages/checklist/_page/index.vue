@@ -133,7 +133,9 @@ export default {
       cur_count: 0,
       tot_count: 0,
       open_time: '',
-      close_time: ''
+      close_time: '',
+      orgMemo: '',
+      memoMsg: ''
     }
   },
   created() {
@@ -174,6 +176,8 @@ export default {
         this.title = data.check_list_detail.title
         this.status = data.check_list_detail.status
         this.type = data.check_list_detail.type
+        this.memoMsg = data.check_list_detail.memo
+        this.orgMemo = data.check_list_detail.memo
         this.items = data.check_list_detail.result_list
         if (data.check_list_detail.result_list) {
           this.cur_count = data.check_list_detail.cur_count
@@ -245,7 +249,22 @@ export default {
         { key: '開始日時', value: this.open_time },
         { key: '完了日時', value: this.close_time }
       ]
-      await this.$refs.infoDialog.open(data)
+      await this.$refs.infoDialog.open(data, { memo: true })
+      this.memoMsg = this.memoMsg.substring(0, 1000)
+      if (this.orgMemo !== this.memoMsg) {
+        const userId = this.$store.state.user.uid
+        const ccId = this.$route.params.page
+        this.$tecoReqApi(
+          'checklist/' + ccId + '/updmemo',
+          {
+            user_id: userId,
+            update_memo: {
+              memo: this.memoMsg
+            }
+          },
+          this.loadData
+        )
+      }
     }
   }
 }

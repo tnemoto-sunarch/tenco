@@ -11,9 +11,21 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-card-text v-if="options.memo">
+        <span>メモ：</span> <span>※OK押さないと更新されません</span>
+        <v-textarea
+          v-model="$parent.memoMsg"
+          full-width
+          rows="3"
+          filled
+          color="info"
+          background-color="#eeeeee"
+          outlined
+        />
+      </v-card-text>
       <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
-        <v-btn color="grey" @click.native="cancel">Cancel</v-btn>
+        <v-btn color="primary" @click.native="cancel">OK</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -26,7 +38,8 @@ export default {
     reject: null,
     items: [],
     options: {
-      width: '90%'
+      width: '90%',
+      memo: false
     }
   }),
   methods: {
