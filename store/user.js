@@ -1,5 +1,9 @@
 export const state = () => ({
-  uid: ''
+  uid: '',
+  uNo: '',
+  uName: '',
+  uType: '',
+  admin: false
 })
 export const mutations = {
   loadUid(state) {
@@ -23,5 +27,29 @@ export const mutations = {
     } else {
       // console.log('have uid already')
     }
+  },
+  setUserInfo(state, data) {
+    state.uNo = data.user_info.no
+    state.uName = data.user_info.name
+    state.uType = data.user_info.type
+    if (data.user_info.type === '10') {
+      state.admin = true
+    }
+  }
+}
+
+export const actions = {
+  async checkUserInfo({ state, commit }) {
+    const userId = state.uid
+    const sl = function(data) {
+      commit('setUserInfo', data)
+    }
+    await this.$tecoReqApi(
+      'user/info',
+      {
+        user_id: userId
+      },
+      sl
+    )
   }
 }

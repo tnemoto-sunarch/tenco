@@ -37,6 +37,7 @@
       <v-img alt="Tenco Logo" src="./logo.png" max-width="40" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <v-icon v-if="userAdmin">vpn_key</v-icon>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -68,11 +69,14 @@ export default {
   computed: {
     ...mapState({
       ptime: (state) => state.checkList.ptime,
-      items: (state) => state.checkList.items
+      items: (state) => state.checkList.items,
+      userName: (state) => state.user.uName,
+      userAdmin: (state) => state.user.admin
     })
   },
   created() {
     this.$store.commit('user/loadUid')
+    this.$store.dispatch('user/checkUserInfo')
     this.updateData()
   },
   methods: {
