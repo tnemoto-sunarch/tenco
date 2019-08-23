@@ -2,7 +2,6 @@ export const state = () => ({
   uid: '',
   uNo: '',
   uName: '',
-  uType: '',
   admin: false
 })
 export const mutations = {
@@ -31,10 +30,7 @@ export const mutations = {
   setUserInfo(state, data) {
     state.uNo = data.user_info.no
     state.uName = data.user_info.name
-    state.uType = data.user_info.type
-    if (data.user_info.type === '10') {
-      state.admin = true
-    }
+    state.admin = data.user_info.admin
   }
 }
 

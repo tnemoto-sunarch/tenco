@@ -54,6 +54,16 @@
                 <v-icon>assignment_late</v-icon>
                 <v-list-item-title>change type</v-list-item-title>
               </v-list-item>
+
+              <v-list-item :disabled="!userAdmin" @click="reopenCheck">
+                <v-icon>lock_open</v-icon>
+                <v-list-item-title>reopen</v-list-item-title>
+              </v-list-item>
+
+              <v-list-item :disabled="!userAdmin" @click="resetCheck">
+                <v-icon>clear_all</v-icon>
+                <v-list-item-title>reset</v-list-item-title>
+              </v-list-item>
             </v-list>
           </v-menu>
         </v-toolbar-items>
@@ -135,7 +145,8 @@ export default {
       open_time: '',
       close_time: '',
       orgMemo: '',
-      memoMsg: ''
+      memoMsg: '',
+      userAdmin: this.$store.state.user.admin
     }
   },
   created() {
@@ -250,7 +261,9 @@ export default {
         { key: '完了日時', value: this.close_time }
       ]
       await this.$refs.infoDialog.open(data, { memo: true })
-      this.memoMsg = this.memoMsg.substring(0, 1000)
+      if (this.memoMsg) {
+        this.memoMsg = this.memoMsg.substring(0, 1000)
+      }
       if (this.orgMemo !== this.memoMsg) {
         const userId = this.$store.state.user.uid
         const ccId = this.$route.params.page
@@ -261,6 +274,42 @@ export default {
             update_memo: {
               memo: this.memoMsg
             }
+          },
+          this.loadData
+        )
+      }
+    },
+    async resetCheck() {
+      const userId = this.$store.state.user.uid
+      const ccId = this.$route.params.page
+      if (
+        await this.$refs.confirm.open(
+          'チェックリストのリセット',
+          'このチェックリストをリセットしますか？'
+        )
+      ) {
+        this.$tecoReqApi(
+          'checklist/' + ccId + '/reset',
+          {
+            user_id: userId
+          },
+          this.loadData
+        )
+      }
+    },
+    async reopenCheck() {
+      const userId = this.$store.state.user.uid
+      const ccId = this.$route.params.page
+      if (
+        await this.$refs.confirm.open(
+          'チェックリストの再開',
+          'このチェックリストを再開しますか？'
+        )
+      ) {
+        this.$tecoReqApi(
+          'checklist/' + ccId + '/reopen',
+          {
+            user_id: userId
           },
           this.loadData
         )
