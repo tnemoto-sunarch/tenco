@@ -15,6 +15,8 @@
         <span>メモ：</span> <span>※OK押さないと更新されません</span>
         <v-textarea
           v-model="$parent.memoMsg"
+          maxlength="1000"
+          counter
           full-width
           rows="3"
           filled

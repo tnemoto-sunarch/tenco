@@ -1,11 +1,13 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
+      v-if="userLogin"
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
       app
+      width="276"
     >
       <v-list dense>
         <v-list-item>
@@ -34,7 +36,7 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-img alt="Tenco Logo" src="./logo.png" max-width="40" />
+      <v-img alt="Tenco Logo" src="img/logo.png" max-width="40" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-icon v-if="userAdmin">vpn_key</v-icon>
@@ -71,7 +73,8 @@ export default {
       ptime: (state) => state.checkList.ptime,
       items: (state) => state.checkList.items,
       userName: (state) => state.user.uName,
-      userAdmin: (state) => state.user.admin
+      userAdmin: (state) => state.user.admin,
+      userLogin: (state) => state.user.login
     })
   },
   created() {

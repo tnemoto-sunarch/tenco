@@ -13,6 +13,9 @@ export default {
    ** Headers of the page
    */
   head: {
+    htmlAttrs: {
+      lang: 'ja'
+    },
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
     meta: [
@@ -24,7 +27,47 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }]
+    link: [
+      { rel: 'shortcut icon', type: 'image/x-icon', href: 'img/favicon.ico' },
+      {
+        rel: 'apple-touch-icon',
+        href: 'img/apple-touch-icon.png',
+        sizes: '180x180'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        href: 'img/apple-touch-icon.png',
+        sizes: '192x192'
+      }
+    ]
+  },
+  /* */
+  workbox: {
+    skipWaiting: true,
+    clientsClaim: true,
+    runtimeCaching: [
+      {
+        // APIから取得した結果
+        urlPattern: envSet.app.apiBaseUrl + '/.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: {
+          cacheExpiration: {
+            maxAgeSeconds: 5
+          },
+          cacheableResponse: {
+            statuses: [200]
+          }
+        }
+      },
+      {
+        // デフォルト（最後に記述する）
+        urlPattern: '/*',
+        handler: 'networkFirst',
+        method: 'GET'
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -37,7 +80,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/common.js', '~/plugins/tencoReqApi.js'],
+  plugins: [
+    '~/plugins/common.js',
+    '~/plugins/tencoReqApi.js',
+    '~/plugins/auth.js'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
