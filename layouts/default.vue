@@ -7,7 +7,7 @@
       :clipped="clipped"
       fixed
       app
-      width="276"
+      width="296"
     >
       <v-list dense>
         <v-list-item>
@@ -17,20 +17,49 @@
         </v-list-item>
       </v-list>
       <v-list dense>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
+        <v-list-item to="/">
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>mdi-apps</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title>Welcome</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-group
+          no-action
+          prepend-icon="assignment"
+          value="true"
+          class="submenu"
+        >
+          <template v-slot:activator>
+            <v-list-item-title>Check List</v-list-item-title>
+          </template>
+
+          <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="item.to"
+            router
+            exact
+          >
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item to="/checklist/add">
+            <v-list-item-action>
+              <v-icon>note_add</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>チェックシートの追加</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
         <div style="height: 100px"></div>
       </v-list>
     </v-navigation-drawer>
@@ -90,6 +119,9 @@ export default {
 }
 </script>
 <style scoped>
+.submenu .v-list-item {
+  padding-left: 32px !important;
+}
 .small {
   font-size: 10px;
 }

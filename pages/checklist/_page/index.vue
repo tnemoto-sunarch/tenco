@@ -113,8 +113,14 @@
       <v-list v-else class="grey darken-1">
         <v-list-item>
           <v-list-item-content>
-            <p>
+            <p v-if="status === '00'">
               チェックを開始してください。
+            </p>
+            <p v-else-if="status === '10'">
+              チェック中です。
+            </p>
+            <p v-else-if="status === '20'">
+              チェックは完了しています。
             </p>
           </v-list-item-content>
         </v-list-item>
@@ -219,8 +225,8 @@ export default {
       const ccId = this.$route.params.page
       if (
         await this.$refs.confirm.open(
-          'チェックリストの終了',
-          'このチェックリストを終了しますか？',
+          'チェックリストの完了',
+          'このチェックリストを完了しますか？',
           { color: 'error' }
         )
       ) {

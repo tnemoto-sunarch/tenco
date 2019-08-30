@@ -8,13 +8,7 @@ export const mutations = {
     // console.log('setList')
     // console.log(data)
     state.ptime = data.proccess
-    state.items = [
-      {
-        icon: 'mdi-apps',
-        title: 'Welcome',
-        to: '/'
-      }
-    ]
+    state.items = []
     for (const obj of data.check_list) {
       let iname = null
       if (obj.status === '00') {
