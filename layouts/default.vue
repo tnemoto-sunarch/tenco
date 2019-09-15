@@ -7,7 +7,7 @@
       :clipped="clipped"
       fixed
       app
-      width="296"
+      width="85vw"
     >
       <v-list dense>
         <v-list-item>
@@ -45,6 +45,9 @@
           >
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-action v-if="item.img">
+              <v-img :src="item.img" max-width="30" />
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title v-text="item.title" />
@@ -119,6 +122,12 @@ export default {
 }
 </script>
 <style scoped>
+.v-application--is-ltr .v-list-item__action:first-child {
+  margin-right: 24px !important;
+}
+.v-navigation-drawer {
+  max-width: 350px;
+}
 .submenu .v-list-item {
   padding-left: 32px !important;
 }

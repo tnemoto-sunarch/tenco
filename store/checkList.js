@@ -20,6 +20,8 @@ export const mutations = {
       }
       state.items.push({
         icon: iname,
+        type: obj.type,
+        img: 'img/list_type_' + obj.type + '.png',
         title: obj.name,
         to: '/checklist/' + obj.id
       })
