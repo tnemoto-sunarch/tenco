@@ -63,6 +63,37 @@
             </v-list-item-content>
           </v-list-item>
         </v-list-group>
+
+        <v-list-group
+          v-if="userAdmin"
+          no-action
+          prepend-icon="assignment"
+          value="true"
+          class="submenu"
+        >
+          <template v-slot:activator>
+            <v-list-item-title>maintenance</v-list-item-title>
+          </template>
+
+          <v-list-item to="/mainte/targetlist">
+            <v-list-item-action>
+              <v-icon>note_add</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>チェック対象者登録</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-group>
+
+        <v-list-item to="/login">
+          <v-list-item-action>
+            <v-icon>refresh</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>re-login</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <div style="height: 100px"></div>
       </v-list>
     </v-navigation-drawer>
@@ -110,6 +141,7 @@ export default {
     })
   },
   created() {
+    // なくてもいいはずだけど、タイミングとページ次第で必要かも？
     this.$store.commit('user/loadUid')
     this.$store.dispatch('user/checkUserInfo')
     this.updateData()

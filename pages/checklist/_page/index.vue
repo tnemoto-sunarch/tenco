@@ -48,7 +48,11 @@
                 <v-list-item-title>info</v-list-item-title>
               </v-list-item>
               <v-list-item
-                :disabled="!(status == '00' || status == '10') || type == '30'"
+                :disabled="
+                  !(status == '00' || status == '10') ||
+                    type == '30' ||
+                    !userAdmin
+                "
                 @click="changeCheck"
               >
                 <v-icon>assignment_late</v-icon>

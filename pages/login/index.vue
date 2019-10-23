@@ -24,7 +24,7 @@
           <v-card-actions>
             <v-spacer />
             <v-btn type="submit" color="primary" nuxt>
-              Continue
+              login
             </v-btn>
           </v-card-actions>
         </v-form>

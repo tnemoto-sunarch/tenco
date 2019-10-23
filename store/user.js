@@ -36,6 +36,7 @@ export const mutations = {
   },
   setLoginInfo(state, data) {
     state.login = data.auth_info.login
+    state.admin = data.auth_info.admin
   }
 }
 
